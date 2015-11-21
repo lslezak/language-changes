@@ -1,5 +1,15 @@
 # language-changes package
 
-A short description of your package.
+This is an [Atom](https://atom.io) package, it adds support for the
+`*.changes` files.
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+Currently only the Linux platform is supported.
+
+## Features
+
+- Syntax highlighting
+- Adding a new entry (similar to `buildvc` or `osc vc`):
+  - Use the `ctrl-shift-q` keyboard shortcut
+  - Use the `Add a new changes entry` item in the context menu (right-click)
+  - Use the `'language-changes:add-new-entry` action in the command palette
+    (`ctrl-shift-p`)

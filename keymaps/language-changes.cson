@@ -1,0 +1,2 @@
+'.platform-linux atom-text-editor[data-grammar*=changes]':
+  'ctrl-shift-q': 'language-changes:add-new-entry'
