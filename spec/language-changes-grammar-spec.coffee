@@ -30,3 +30,13 @@ describe "Changes grammar", ->
     {tokens} = grammar.tokenizeLine(separator)
     expect(tokens[0]).toEqual value: separator, scopes: ["text.changes",
       "invalid.illegal.changes"]
+
+  it "tokenizes a header line", ->
+    line = "Mon Nov 23 13:57:52 UTC 2015 - lslezak@localhost"
+    {tokens} = grammar.tokenizeLine(line)
+    expect(tokens[0]).toEqual value: "Mon Nov 23 13:57:52 UTC 2015", scopes: ["text.changes",
+      "meta.header.changes", "entity.date.changes"]
+    expect(tokens[1]).toEqual value: " - ", scopes: ["text.changes",
+      "meta.header.changes"]
+    expect(tokens[2]).toEqual value: "lslezak@localhost", scopes: ["text.changes",
+      "meta.header.changes", "entity.email.changes"]
