@@ -3,13 +3,12 @@
   "main": "./lib/language-changes",
   "version": "0.0.0",
   "description": "Support for *.changes files used for building SUSE Linux RPM packages",
-  "keywords": [
-  ],
+  "keywords": ["changes", "changelog"],
+  "activationHooks": ["language-changes:grammar-used"],
   "repository": "https://github.com/lslezak/language-changes",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

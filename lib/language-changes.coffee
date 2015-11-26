@@ -6,6 +6,7 @@ module.exports = LanguageChanges =
   subscriptions: null
 
   activate: (state) ->
+    console.log "Activating language-changes package..."
     @subscriptions = new CompositeDisposable
 
     # Register a command that adds a new changes entry
