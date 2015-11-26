@@ -3,8 +3,12 @@ describe "Changes grammar", ->
   grammar = null
 
   beforeEach ->
+    promise = atom.packages.activatePackage('language-changes')
+    atom.packages.triggerActivationHook("language-changes:grammar-used")
+    # atom.packages.triggerDeferredActivationHooks()
+
     waitsForPromise ->
-      atom.packages.activatePackage("language-changes")
+      promise
 
     runs ->
       grammar = atom.grammars.grammarForScopeName("text.changes")
