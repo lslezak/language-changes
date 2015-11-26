@@ -1,5 +1,7 @@
 # language-changes package
 
+[![Build Status](https://travis-ci.org/lslezak/language-changes.svg)](https://travis-ci.org/lslezak/language-changes)
+
 This is an [Atom](https://atom.io) package, it adds support for the
 `*.changes` files.
 
