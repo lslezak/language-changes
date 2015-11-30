@@ -26,12 +26,4 @@
     'match': '^([A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9:]{8} [A-Z]+ [0-9]+) - (\\S+@\\S+)'
     'name': 'meta.header.changes'
   }
-  {
-    'match': '(bnc|bsc|boo|BNC|BSC|BOO)\\s*#\\d+'
-    'name': 'bug_number.changes'
-  }
-  {
-    'match': '(fate|FATE)\\s*#\\d+'
-    'name': 'fate_number.changes'
-  }
 ]
