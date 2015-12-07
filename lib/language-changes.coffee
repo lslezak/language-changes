@@ -6,7 +6,7 @@ module.exports = LanguageChanges =
   subscriptions: null
 
   activate: (state) ->
-    console.log "Activating language-changes package..."
+    console.debug "Activating language-changes package..."
     @subscriptions = new CompositeDisposable
 
     # Register a command that adds a new changes entry
@@ -18,67 +18,62 @@ module.exports = LanguageChanges =
 
   serialize: ->
 
-  add_new_entry: ->
-    return unless editor = atom.workspace.getActiveTextEditor()
-    console.log @get_domain_promise()
-
-    editor.setCursorBufferPosition([0,0])
-    editor.insertText("-------------------------------------------------------------------\n")
-    editor.insertText(@get_date() + " - ")
-
-    user = process.env["USER"]
-    try
-      domain = child_process.execSync("dnsdomainname").toString()
-    catch
-      domain = "localhost"
-
-    editor.insertText(@get_email())
-    editor.insertText("\n\n- \n\n")
-
-    editor.setCursorBufferPosition([3,3])
-
-  get_date: ->
-    try
-      child_process.execSync("LC_ALL=POSIX TZ=UTC date").toString().split('\n')[0]
-    catch
-      "<cannot read the date>"
-
-  get_domain_promise: ->
+  current_date: ->
     new Promise (resolve, reject) ->
       child_process.exec "LC_ALL=POSIX TZ=UTC date", (error, stdout, stderr) ->
         if error?
-          console.error error
+          console.log "error: #{error}"
           reject(error)
         else
-          resolve(stdout)
+          resolve(stdout.trim())
 
-  get_email: ->
-    email = @read_oscrc_email()
-    return email if email?
-    @build_email()
+  read_oscrc: ->
+    new Promise (resolve, reject) ->
+      fs.readFile process.env['HOME'] + "/.oscrc", "utf8", (error, data) ->
+        if error?
+          console.warn "Error reading .oscrc file: #{error}"
+          resolve("")
+        else
+          resolve(data)
 
-  # read the email from the ~/.oscrc file
-  read_oscrc_email: ->
-    try
-      oscrc = fs.readFileSync(process.env['HOME'] + "/.oscrc", "utf8")
-    catch error
-      console.log "Error reading .oscrc file: #{error}"
-      return null
-
+  find_email: (oscrc)->
     for line in oscrc.split('\n')
       if (m = /^\s*email\s*=\s*(\S+)/.exec(line))?
         console.log "Found email in .oscrc file: #{m[1]}"
-        return m[1]
+        return (m[1])
 
-    null
+  email_fallback: (email)->
+    # the email is valid, no fallback needed
+    return email if email?
 
-  # build the user email address
-  build_email: ->
-    user = process.env["USER"]
+    new Promise (resolve, reject) ->
+      child_process.exec "dnsdomainname", (error, stdout, stderr) ->
+        if error?
+          console.warn "dnsdomainname error: #{error}"
+          # fallback to "localhost"
+          domain = "localhost"
+        else
+          domain = stdout.trim()
 
-    try
-      domain = child_process.execSync("dnsdomainname").toString().trim()
-    catch
-      domain = "localhost"
+        user = process.env["USER"]
+        resolve("#{user}@#{domain}")
 
-    "#{user}@#{domain}"
+  add_new_entry: ->
+    return unless editor = atom.workspace.getActiveTextEditor()
+
+    date = @current_date()
+    email = @read_oscrc().then(@find_email).then(@email_fallback)
+
+    Promise.all([date, email]).then (results) ->
+      date = results[0]
+      email = results[1]
+      header = "-------------------------------------------------------------------\n" +
+        "#{date} - #{email}\n\n- \n\n"
+
+      editor.setCursorBufferPosition([0,0])
+      editor.insertText(header)
+      editor.setCursorBufferPosition([3,3])
+    .catch (error) ->
+      console.error error
+      atom.notifications.addError("Adding entry failed: #{error}")
+
