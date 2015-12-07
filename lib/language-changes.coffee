@@ -20,6 +20,7 @@ module.exports = LanguageChanges =
 
   add_new_entry: ->
     return unless editor = atom.workspace.getActiveTextEditor()
+    console.log @get_domain_promise()
 
     editor.setCursorBufferPosition([0,0])
     editor.insertText("-------------------------------------------------------------------\n")
@@ -42,11 +43,20 @@ module.exports = LanguageChanges =
     catch
       "<cannot read the date>"
 
+  get_domain_promise: ->
+    new Promise (resolve, reject) ->
+      child_process.exec "LC_ALL=POSIX TZ=UTC date", (error, stdout, stderr) ->
+        if error?
+          console.error error
+          reject(error)
+        else
+          resolve(stdout)
+
   get_email: ->
     email = @read_oscrc_email()
     return email if email?
     @build_email()
-  
+
   # read the email from the ~/.oscrc file
   read_oscrc_email: ->
     try
@@ -61,7 +71,7 @@ module.exports = LanguageChanges =
         return m[1]
 
     null
-    
+
   # build the user email address
   build_email: ->
     user = process.env["USER"]
@@ -72,4 +82,3 @@ module.exports = LanguageChanges =
       domain = "localhost"
 
     "#{user}@#{domain}"
-    
