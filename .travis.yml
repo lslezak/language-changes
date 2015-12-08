@@ -6,7 +6,7 @@ git:
 
 env:
   global:
-    - APM_TEST_PACKAGES=""
+    - APM_TEST_PACKAGES="coffeelint"
 
   matrix:
     - ATOM_CHANNEL=stable
