@@ -35,7 +35,7 @@ class ChangelogEntry
   find_email: (oscrc)->
     for line in oscrc.split('\n')
       if (m = /^\s*email\s*=\s*(\S+)/.exec(line))?
-        console.log "Found email in .oscrc file: #{m[1]}"
+        console.debug "Found email in .oscrc file: #{m[1]}"
         return (m[1])
 
   email_fallback: (email)->
