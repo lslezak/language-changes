@@ -13,7 +13,7 @@ class ChangelogEntry
       return "-------------------------------------------------------------------\n" +
         "#{date} - #{email}\n\n- \n\n"
 
-  # Internal    
+  # Internal
   current_date: ->
     new Promise (resolve, reject) ->
       child_process.exec "LC_ALL=POSIX TZ=UTC date", (error, stdout, stderr) ->
@@ -35,7 +35,7 @@ class ChangelogEntry
   find_email: (oscrc)->
     for line in oscrc.split('\n')
       if (m = /^\s*email\s*=\s*(\S+)/.exec(line))?
-        console.log "Found email in .oscrc file: #{m[1]}"
+        console.debug "Found email in .oscrc file: #{m[1]}"
         return (m[1])
 
   email_fallback: (email)->

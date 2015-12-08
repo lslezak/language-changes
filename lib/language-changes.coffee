@@ -19,7 +19,7 @@ module.exports = LanguageChanges =
 
   add_new_entry: ->
     return unless editor = atom.workspace.getActiveTextEditor()
-    
+
     entry = new ChangelogEntry
     # create a new header
     entry.header().then (header) ->
