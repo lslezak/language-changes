@@ -13,7 +13,7 @@ class ChangelogEntry
       return "-------------------------------------------------------------------\n" +
         "#{date} - #{email}\n\n- \n\n"
 
-  # Internal    
+  # Internal
   current_date: ->
     new Promise (resolve, reject) ->
       child_process.exec "LC_ALL=POSIX TZ=UTC date", (error, stdout, stderr) ->
