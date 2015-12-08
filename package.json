@@ -1,10 +1,15 @@
 {
   "name": "language-changes",
   "main": "./lib/language-changes",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Support for *.changes files used for building SUSE Linux RPM packages",
-  "keywords": ["changes", "changelog"],
-  "_activationHooks - disabled, does not work at reload correctly": ["language-changes:grammar-used"],
+  "keywords": [
+    "changes",
+    "changelog"
+  ],
+  "_activationHooks - disabled, does not work at reload correctly": [
+    "language-changes:grammar-used"
+  ],
   "repository": "https://github.com/lslezak/language-changes",
   "license": "MIT",
   "engines": {
