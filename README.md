@@ -1,6 +1,8 @@
 # Atom language-changes
 
 [![Build Status](https://travis-ci.org/lslezak/language-changes.svg)](https://travis-ci.org/lslezak/language-changes)
+![Version](https://img.shields.io/apm/v/language-changes.svg)
+![License MIT](https://img.shields.io/apm/l/language-changes.svg)
 
 This [Atom](https://atom.io) package adds support for the `*.changes` files.
 
