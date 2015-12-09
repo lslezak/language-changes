@@ -10,7 +10,8 @@ module.exports = LanguageChanges =
 
     # Register a command that adds a new changes entry, only Linux is supported so far
     if process.platform == 'linux'
-      @subscriptions.add atom.commands.add 'atom-workspace', 'language-changes:add-new-entry': => @add_new_entry()
+      @subscriptions.add atom.commands.add 'atom-workspace',
+        'language-changes:add-new-entry': => @add_new_entry()
 
   deactivate: ->
     @subscriptions.dispose()
