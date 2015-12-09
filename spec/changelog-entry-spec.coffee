@@ -5,7 +5,7 @@ fs = require('fs')
 
 # the provided waitsForPromise helper fails when the promise is resolved to a failure
 # this is a complement helper for failed promises
-# see https://github.com/atom/atom/blob/5587bad75897bbc8fe3b8181bee83e91dc2ab6a9/spec/async-spec-helpers.coffee#L20
+# see https://goo.gl/VtFGVn
 waitsForFailedPromise = (fn) ->
   promise = fn()
   waitsFor 'spec promise to resolve', 30000, (done) ->
@@ -122,8 +122,8 @@ describe "Add a new changelog entry", ->
       process.env["USER"] = @originalUser
 
     it "uses the 'localhost' fallback ", ->
-       header_promise.then (header) ->
-         expect(header_includes(header, "tester@localhost")).toBe(true)
+      header_promise.then (header) ->
+        expect(header_includes(header, "tester@localhost")).toBe(true)
 
   describe "when the date command fails", ->
     date_error = "date: command not found"
